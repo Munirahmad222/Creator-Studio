@@ -1,0 +1,14 @@
+name = "creator-platform-api"
+main = "src/index.ts"
+compatibility_date = "2025-04-08"
+
+# Create a new D1 database for this standalone project, then replace database_id.
+# Do not bind this Worker to any existing project's database.
+[[d1_databases]]
+binding = "DB"
+database_name = "creator-platform-db"
+database_id = "REPLACE_WITH_NEW_D1_DATABASE_ID"
+
+[vars]
+APP_ENV = "development"
+INSTAGRAM_MODE = "demo"
