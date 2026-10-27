@@ -1,0 +1,7 @@
+{
+  "name": "@creator-platform/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Capacitor Android/iOS wrapper foundation; native projects are not generated in Phase 1."
+}
