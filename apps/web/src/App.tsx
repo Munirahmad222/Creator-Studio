@@ -170,7 +170,7 @@ function VideoEditor() {
         ctx.drawImage(video, (width - dw) / 2, (height - dh) / 2, dw, dh);
         if (title.trim()) {
           const fontSize = Math.max(26, Math.round(width * 0.045));
-          ctx.font = \`700 \${fontSize}px system-ui, sans-serif\`; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          ctx.font = `700 ${fontSize}px system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
           const text = title.trim().slice(0, 100); const maxWidth = width * 0.88;
           const lines: string[] = []; let line = '';
           for (const word of text.split(/\s+/)) { const test = line ? \`\${line} \${word}\` : word; if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = word; } else line = test; }
