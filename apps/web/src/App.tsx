@@ -200,7 +200,7 @@ function VideoEditor() {
     setNotice('Edits reset. Your original video is unchanged.');
   }
 
-  const timeLabel = (seconds: number) => \`\${Math.floor(seconds / 60).toString().padStart(2, '0')}:\${Math.floor(seconds % 60).toString().padStart(2, '0')}\`;
+  const timeLabel = (seconds: number) => `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`;
 
   return <div className="tool-page video-editor-page">
     <div className="tool-page-heading"><div><div className="eyebrow"><Film size={15}/> CREATOR WORKSPACE</div><h1>Video Editor</h1><p className="page-intro">Trim a clip, add a title overlay and export a short video locally — no paid API required.</p></div><span className="status-pill">Local editor preview</span></div>
@@ -210,7 +210,7 @@ function VideoEditor() {
         <div className="video-stage">
           {videoUrl ? <><video ref={videoRef} src={videoUrl} controls onLoadedMetadata={onMetadata} onTimeUpdate={() => { const v = videoRef.current; if (v && v.currentTime >= trimEnd && !busy) v.pause(); }} style={{ aspectRatio: aspect === 'portrait' ? '9 / 16' : aspect === 'square' ? '1 / 1' : aspect === 'landscape' ? '16 / 9' : 'auto' }} /><canvas ref={canvasRef} className="video-export-canvas"/><div className="preview-title-overlay">{title}</div></> : <div className="video-empty"><div className="video-empty-icon"><Film size={28}/></div><strong>Bring your video to life</strong><p>Choose a video from your device to start editing.</p><label className="generate-button video-empty-upload"><Upload size={15}/> Choose video<input type="file" accept="video/*" onChange={e => importVideo(e.target.files?.[0])}/></label><span>Video remains on your device.</span></div>}
         </div>
-        {file && <div className="video-file-row"><Film size={16}/><span title={file.name}>{file.name}</span><span>{duration ? \`\${timeLabel(duration)} · \${(file.size / 1024 / 1024).toFixed(1)} MB\` : \`\${(file.size / 1024 / 1024).toFixed(1)} MB\`}</span><button className="icon-button" aria-label="Remove video" onClick={() => { if (videoUrl) URL.revokeObjectURL(videoUrl); setVideoUrl(''); setFile(null); setDuration(0); setTrimStart(0); setTrimEnd(0); setNotice('Video removed. Import another clip to continue.'); }}><Trash2 size={16}/></button></div>}
+        {file && <div className="video-file-row"><Film size={16}/><span title={file.name}>{file.name}</span><span>{duration ? `${timeLabel(duration)} · ${(file.size / 1024 / 1024).toFixed(1)} MB` : `${(file.size / 1024 / 1024).toFixed(1)} MB`}</span><button className="icon-button" aria-label="Remove video" onClick={() => { if (videoUrl) URL.revokeObjectURL(videoUrl); setVideoUrl(''); setFile(null); setDuration(0); setTrimStart(0); setTrimEnd(0); setNotice('Video removed. Import another clip to continue.'); }}><Trash2 size={16}/></button></div>}
       </section>
       <section className="panel video-controls-panel"><div className="video-panel-head"><div><span className="result-kicker">EDIT CLIP</span><h2>Quick edits</h2></div><button className="copy-button" onClick={resetEdits} disabled={!file}><RotateCcw size={13}/> Reset</button></div>
         <label className="field-label" htmlFor="video-title"><Type size={13} className="inline-label-icon"/> Title overlay</label><input id="video-title" className="tool-input" value={title} onChange={e => setTitle(e.target.value)} placeholder="Add a title to your video" maxLength={100}/><p className="video-help">Preview shows your title. Export burns it into the video.</p>
