@@ -153,7 +153,7 @@ function VideoEditor() {
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
         const outUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href = outUrl; a.download = \`\${file.name.replace(/\.[^.]+$/, '')}-edited.webm\`;
+        const a = document.createElement('a'); a.href = outUrl; a.download = `${file.name.replace(/\.[^.]+$/, '')}-edited.webm`;
         document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(outUrl);
         canvasStream.getTracks().forEach(track => track.stop());
         mediaStream?.getTracks().forEach(track => track.stop());
