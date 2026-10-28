@@ -1,19 +1,20 @@
 # Creator Platform
 
-A standalone, free-first international creator platform for web/PWA and future Capacitor Android/iOS clients. The current repository is **Phase 1 foundation only**; authentication, creator tools, video editing, marketplace workflows and live integrations are not implemented yet.
+A free-first international creator platform foundation for web/PWA and future Capacitor Android/iOS clients. This repository currently contains the **Phase 1 foundation only**; authentication, creator tools, video editing, marketplace workflows and live integrations are not implemented yet.
 
 ## Stack
 
 - React + TypeScript + Vite + Tailwind CSS
-- Cloudflare Workers API (separate app)
-- Cloudflare D1 with versioned SQL migrations
+- Cloudflare Worker API and static web assets deployed together from the root `wrangler.toml`
+- Cloudflare D1 migrations are included but no D1 database is bound yet
 - Shared TypeScript configuration, i18n primitives and UI components
-- Node's built-in test runner for dependency-light foundation tests
+- Node's built-in test runner for foundation tests
 
 ## Requirements
 
 - Node.js 20 or newer and npm 10 or compatible
-- Cloudflare account only when deploying; no credentials needed for local frontend preview
+- Cloudflare account for deployment
+- No paid AI API is required by this foundation
 
 ## Local setup
 
@@ -25,29 +26,35 @@ npm run build
 npm run dev
 ```
 
-If package installation cannot reach the npm registry, retry from a network-enabled terminal. No paid API is required by this foundation.
-
-## Database migrations
-
-SQL migrations are in `database/migrations/`. Apply locally after configuring Wrangler/D1:
-
-```sh
-npx wrangler d1 execute creator-platform-db --local --file=database/migrations/0001_foundation.sql
-```
-
-The database name above is a proposed local binding name, not a provisioned remote database. Create a **new, separate** D1 database before remote deployment and update `apps/api/wrangler.toml` with its actual ID. Never point this project at another project's database.
-
-## API local development
+The web app runs with Vite. The API/Worker can be tested locally with:
 
 ```sh
 npm run dev --workspace @creator-platform/api
 ```
 
-The Worker currently exposes a health endpoint only. It is not a production authentication API.
+## Cloudflare deployment
+
+The root `wrangler.toml` deploys the built web assets and Worker together. In the Cloudflare build settings use:
+
+- Build command: `npm run build`
+- Deploy command: `npm run deploy`
+- Build output directory is managed by Wrangler from `apps/web/dist`
+
+The API health endpoint is `/api/health`. Instagram remains in demo mode and is never reported as connected.
+
+## Database migrations
+
+SQL migrations are in `database/migrations/`. Before adding database-dependent features, create a **new, separate** Cloudflare D1 database for this project and configure the `DB` binding in the root `wrangler.toml` with the real database ID. Do not bind this project to another project's database.
+
+Example local migration command after configuring Wrangler/D1:
+
+```sh
+npx wrangler d1 execute creator-platform-db --local --file=database/migrations/0001_foundation.sql
+```
 
 ## Mobile
 
-Capacitor configuration is reserved for a later integration step; Phase 1 does not claim that native Android/iOS builds have been configured or tested. Android builds require Android Studio/SDK. iOS builds require macOS and Xcode.
+Capacitor configuration is reserved for a later integration step; native Android/iOS builds have not been generated or tested. Android builds require Android Studio/SDK. iOS builds require macOS and Xcode.
 
 ## Security and secrets
 
@@ -58,4 +65,4 @@ Capacitor configuration is reserved for a later integration step; Phase 1 does n
 
 ## Phase boundary
 
-This deliverable covers the Phase 1 foundation only. Do not implement Phase 2 authentication until the project owner explicitly approves it.
+This deliverable covers the Phase 1 foundation only. Phase 2 features should be implemented only with the project owner's explicit approval.
