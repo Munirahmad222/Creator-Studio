@@ -1,21 +1,14 @@
 {
-  "name": "creator-platform",
+  "name": "@creator-platform/api",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "apps/web",
-    "apps/api",
-    "apps/mobile",
-    "packages/*"
-  ],
+  "type": "module",
   "scripts": {
-    "dev": "npm run dev --workspace @creator-platform/web",
-    "build": "npm run build --workspace @creator-platform/web && npm run typecheck --workspace @creator-platform/api",
-    "typecheck": "npm run typecheck --workspace @creator-platform/api",
-    "test": "node --test tests/*.test.mjs",
-    "deploy:api": "wrangler deploy --config apps/api/wrangler.toml"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "wrangler dev --config ../../wrangler.toml"
   },
   "devDependencies": {
-    "wrangler": "^4.0.0"
+    "@cloudflare/workers-types": "^4.20250408.0",
+    "typescript": "^5.8.3"
   }
 }

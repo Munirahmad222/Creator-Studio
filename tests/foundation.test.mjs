@@ -56,3 +56,23 @@ test('Phase 1 navigation includes required product sections', async () => {
     assert.ok(source.includes(route), `Missing navigation route ${route}`);
   }
 });
+
+
+test('workspace package names are unique and API is a real workspace', async () => {
+  const rootPackage = JSON.parse(await read('package.json'));
+  const apiPackage = JSON.parse(await read('apps/api/package.json'));
+  const webPackage = JSON.parse(await read('apps/web/package.json'));
+  assert.ok(rootPackage.workspaces.includes('apps/*'));
+  assert.equal(apiPackage.name, '@creator-platform/api');
+  assert.equal(webPackage.name, '@creator-platform/web');
+  assert.equal(existsSync(path.join(root, 'apps/api/api-package.json')), false);
+});
+
+test('Cloudflare deployment config serves the web build and routes API requests to the Worker', async () => {
+  const rootPackage = JSON.parse(await read('package.json'));
+  const config = await read('wrangler.toml');
+  assert.ok(rootPackage.devDependencies.wrangler);
+  assert.equal(rootPackage.scripts.deploy, 'wrangler deploy');
+  assert.match(config, /directory = "\.\/apps\/web\/dist"/);
+  assert.match(config, /run_worker_first = \["\/api\/\*"\]/);
+});
