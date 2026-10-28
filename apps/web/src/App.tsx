@@ -173,7 +173,7 @@ function VideoEditor() {
           ctx.font = `700 ${fontSize}px system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
           const text = title.trim().slice(0, 100); const maxWidth = width * 0.88;
           const lines: string[] = []; let line = '';
-          for (const word of text.split(/\s+/)) { const test = line ? \`\${line} \${word}\` : word; if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = word; } else line = test; }
+          for (const word of text.split(/\s+/)) { const test = line ? `${line} ${word}` : word; if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = word; } else line = test; }
           if (line) lines.push(line);
           const lineHeight = fontSize * 1.2; const bottom = height * 0.09;
           lines.slice(-3).forEach((item, index, arr) => { const y = height - bottom - (arr.length - 1 - index) * lineHeight; ctx.lineWidth = Math.max(3, fontSize * 0.16); ctx.strokeStyle = 'rgba(0,0,0,.78)'; ctx.fillStyle = '#fff'; ctx.strokeText(item, width / 2, y, maxWidth); ctx.fillText(item, width / 2, y, maxWidth); });
