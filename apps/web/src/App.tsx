@@ -190,7 +190,7 @@ function VideoEditor() {
       };
       requestAnimationFrame(tick);
     } catch (error) {
-      setBusy(false); setNotice(error instanceof Error ? \`Export failed: \${error.message}\` : 'Export failed. Try again in Chrome.');
+      setBusy(false); setNotice(error instanceof Error ? `Export failed: ${error.message}` : 'Export failed. Try again in Chrome.');
     }
   }
 
